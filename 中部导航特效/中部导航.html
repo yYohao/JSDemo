@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #header{
+            width: 100%;
+            height: 60px;
+            background-color: blue;
+        }
+        #nav{
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            background-color: yellowgreen;
+
+
+        }
+        #content{
+            width: 800px;
+            height: 1000px;
+            background-color: deepskyblue;
+            margin: 0 auto;
+        }
+        .nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="header"></div>
+<nav id="nav">xxxxxxxxxxxxxxxxxxxxx</nav>
+<div id="content"></div>
+<script>
+    window.onload = function () {
+        //1.获取需要的标签
+        var nav = document.getElementById("nav");
+
+        var nav_top = nav.offsetTop;
+
+        //2.滚动监听
+        window.onscroll = function () {
+
+            // 方法1
+            //if (scroll().top > nav_top) {
+            //    nav.style.top = scroll().top + 'px';
+            //}else {
+            //    nav.style.top = nav_top + 'px';
+            //}
+
+            // 方法2
+            if (scroll().top > nav_top) {
+                nav.className = "nav";
+            }else {
+                nav.className = "";
+            }
+
+        }
+    }
+
+
+
+    //scroll兼容性
+    function scroll() {
+        if (window.pageXOffset !== null){
+            return {
+                top : window.pageYOffset,
+                left : window.pageXOffset
+            }
+        }else if (document.compatMode === "CSS1Compat") {
+            return{
+                top : document.documentElement.scrollTop,
+                left : document.documentElement.scrollLeft
+            }
+        }
+
+        return {
+            top : document.body.scrollTop,
+            left : document.body.scrollLeft
+        }
+    }
+</script>
+</body>
+</html>

@@ -84,7 +84,6 @@
         //2.list监听
         for (var i=0; i<allLis.length; i++){
             (function (i) {
-
                 allLis[i].onmouseover = function () {
                     small_box.children[0].src = "images/pic00" + (i + 1) + ".jpg";
                     big_box.children[0].src = "images/pic0" + (i + 1) + ".jpg"
@@ -99,12 +98,13 @@
             big_box.style.display = "block";
 
             small_box.onmousemove = function (event) {
-                var e = event || window.event;
+                var e = event || window.event;  //兼容
 
+                //获取鼠标距离smallbox左边的距离 - 半个标记的长宽
                 var mouseX = e.clientX - box.offsetLeft - mark.offsetWidth * 0.5;
                 var mouseY = e.clientY - box.offsetTop - mark.offsetHeight * 0.5 ;
 
-                
+                //边界监测，在鼠标超出边界时的处理
                 if (mouseX < 0){
                     mouseX = 0;
                 }else if (mouseX >= small_box.offsetWidth - mark.offsetWidth){
@@ -116,12 +116,11 @@
                 }else if (mouseY >= small_box.offsetHeight - mark.offsetHeight){
                     mouseY = small_box.offsetHeight - mark.offsetHeight;
                 }
-
+                //让标记动起来
                 mark.style.left = mouseX + 'px';
                 mark.style.top = mouseY + 'px';
-
                 //大图动
-                /**
+                /**放大镜公式
                  * smallX / bigX = smallBox.width / bigBox.width
                  */
                 console.log(mouseX / (small_box.offsetWidth / big_box.offsetWidth));
@@ -143,24 +142,7 @@
     }
 
 
-    function scroll() {
-        if (window.pageXOffset !== null){
-            return {
-                top : window.pageYOffset,
-                left : window.pageXOffset
-            }
-        }else if (document.compatMode === "CSS1Compat") {
-            return{
-                top : document.documentElement.scrollTop,
-                left : document.documentElement.scrollLeft
-            }
-        }
 
-        return {
-            top : document.body.scrollTop,
-            left : document.body.scrollLeft
-        }
-    }
 </script>
 </body>
 </html>
