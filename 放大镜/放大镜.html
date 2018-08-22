@@ -119,7 +119,7 @@
                 //让标记动起来
                 mark.style.left = mouseX + 'px';
                 mark.style.top = mouseY + 'px';
-                //大图动
+                //大图跟随标记动
                 /**放大镜公式
                  * smallX / bigX = smallBox.width / bigBox.width
                  */
@@ -129,10 +129,6 @@
 
             }
 
-
-
-
-
         }
 
         small_box.onmouseout =function () {
@@ -140,8 +136,6 @@
             big_box.style.display = "none";
         }
     }
-
-
 
 </script>
 </body>
