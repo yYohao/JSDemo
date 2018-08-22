@@ -1,3 +1,3 @@
 # JSDemo
-js各种demo
-1.照片墙
+js各种demo/<br>
+1.放大镜特效
