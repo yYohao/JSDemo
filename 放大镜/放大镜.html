@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        #box{
+            width: 350px;
+            height: 350px;
+            margin: 100px;
+
+            position: relative;
+            cursor: pointer;
+        }
+
+        #small_box{
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        #mark{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: yellow;
+            opacity: 0.3;
+            display: none;
+        }
+
+        #big_box{
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            top: 0;
+            left: 360px;
+            overflow: hidden;
+            display: none;
+        }
+        #big_box img{
+            position: absolute;
+        }
+
+        #list{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="small_box">
+        <img src="images/pic001.jpg" alt="">
+        <span id="mark"></span>
+    </div>
+    <div id="big_box">
+        <img src="images/pic01.jpg" alt="">
+    </div>
+    <div id="list">
+        <img src="images/pic0001.jpg" alt="">
+        <img src="images/pic0002.jpg" alt="">
+        <img src="images/pic0003.jpg" alt="">
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        //1.获取需要的标签
+        var box = document.getElementById("box");
+        var small_box = document.getElementById("small_box");
+        var big_box = document.getElementById("big_box");
+        var big_img = document.getElementById("big_box").children[0];
+        var allLis = document.getElementById("list").children;
+        var mark = document.getElementById("mark");
+
+        //2.list监听
+        for (var i=0; i<allLis.length; i++){
+            (function (i) {
+
+                allLis[i].onmouseover = function () {
+                    small_box.children[0].src = "images/pic00" + (i + 1) + ".jpg";
+                    big_box.children[0].src = "images/pic0" + (i + 1) + ".jpg"
+                }
+            })(i)
+        }
+
+        //2.图片监听
+        small_box.onmouseover = function () {
+
+            mark.style.display = "block";
+            big_box.style.display = "block";
+
+            small_box.onmousemove = function (event) {
+                var e = event || window.event;
+
+                var mouseX = e.clientX - box.offsetLeft - mark.offsetWidth * 0.5;
+                var mouseY = e.clientY - box.offsetTop - mark.offsetHeight * 0.5 ;
+
+                
+                if (mouseX < 0){
+                    mouseX = 0;
+                }else if (mouseX >= small_box.offsetWidth - mark.offsetWidth){
+                    mouseX = small_box.offsetWidth - mark.offsetWidth;
+                }
+
+                if (mouseY < 0){
+                    mouseY = 0;
+                }else if (mouseY >= small_box.offsetHeight - mark.offsetHeight){
+                    mouseY = small_box.offsetHeight - mark.offsetHeight;
+                }
+
+                mark.style.left = mouseX + 'px';
+                mark.style.top = mouseY + 'px';
+
+                //大图动
+                /**
+                 * smallX / bigX = smallBox.width / bigBox.width
+                 */
+                console.log(mouseX / (small_box.offsetWidth / big_box.offsetWidth));
+                big_img.style.left = - mouseX / (small_box.offsetWidth / big_box.offsetWidth) + 'px';
+                big_img.style.top = - mouseY / (small_box.offsetHeight / big_box.offsetHeight) + 'px';
+
+            }
+
+
+
+
+
+        }
+
+        small_box.onmouseout =function () {
+            mark.style.display = "none";
+            big_box.style.display = "none";
+        }
+    }
+
+
+    function scroll() {
+        if (window.pageXOffset !== null){
+            return {
+                top : window.pageYOffset,
+                left : window.pageXOffset
+            }
+        }else if (document.compatMode === "CSS1Compat") {
+            return{
+                top : document.documentElement.scrollTop,
+                left : document.documentElement.scrollLeft
+            }
+        }
+
+        return {
+            top : document.body.scrollTop,
+            left : document.body.scrollLeft
+        }
+    }
+</script>
+</body>
+</html>
