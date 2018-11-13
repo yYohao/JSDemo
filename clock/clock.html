@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* 表盘样式 */
+        #circle{
+            width: 210px;
+            height: 210px;
+            margin: 50px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background-color: #555;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+        #month{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            border: 1px solid #eee;
+            box-shadow:5px #000 ;
+            background-color: #ddd;
+            top:90px;
+            left:140px;
+            color:#555;
+            line-height: 30px;
+            text-align: center;
+        }
+        /* 时刻度样式 */
+        #hour-circle{
+            width: 210px;
+            height: 210px;
+            margin: 0;
+            padding: 0;
+            /* border-radius: 50%; */
+            /* border: 1px solid #000; */
+            position: absolute;
+            top: 0;
+            color:#fff; 
+        }
+        #hour-circle li {
+            list-style: none;
+            height: 6px;
+            width: 3px;
+            background-color: #fff;
+            position: absolute;
+            top: 102px;
+            left: 103px;
+        }
+        /* 分刻度样式 */
+        #minute-circle{
+            width: 210px;
+            height: 210px;
+            margin: 0;
+            padding: 0;
+            /* border-radius: 50%; */
+            /* border: 1px solid #000; */
+            position: absolute;
+            top: 0;
+        }
+        #minute-circle li {
+            list-style: none;
+            height: 4px;
+            width: 1px;
+            background-color: #fff;
+            position: absolute;
+            top: 103px;
+            left: 105px;
+        }
+        /* #circle ul li:nth-child(n):after{
+            content: ;
+            position: absolute;
+            top: 8px;
+            left: -5px;
+        } */
+        #second{
+            width: 1px;
+            height: 100px;
+            background-color: #fff;
+            margin:5px 105px;
+            transform-origin: 0px 100px;
+            /* transform: rotate(30deg); */
+            position:absolute;
+        }
+        #minute{
+            width: 2px;
+            height: 80px;
+            background-color: #fff;
+            margin:25px 105px;
+            transform-origin: 0px 80px;
+            /* transform: rotate(30deg); */
+            position:absolute;
+        }
+        #hour{
+            width: 3px;
+            height: 60px;
+            background-color: #fff;
+            margin:46px 103px;
+            transform-origin: 0px 60px;
+            /* transform: rotate(60deg); */
+            position:absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="circle">
+        <span id="month"></span>
+        <ul id="hour-circle">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="minute-circle">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        <div id="second"></div>
+        <div id="minute"></div>
+        <div id="hour"></div>
+    </div>
+    <button id="start">开始</button>
+    <button id="stop">结束</button>
+<script>
+window.onload = function (param) { 
+    const second = document.getElementById("second");
+    const minute = document.getElementById("minute");
+    const hour = document.getElementById("hour");
+    const hour_circles = document.getElementById("hour-circle").children;
+    const minute_circles = document.getElementById("minute-circle").children;
+    const start = document.getElementById("start");
+    const stop = document.getElementById("stop");
+    const day = document.getElementById("month");
+    let timer;
+    let date = new Date();
+    console.log(date.getHours(), date.getMinutes(), date.getSeconds());
+    let seconds = date.getSeconds() / 60 * 360;
+    let minutes = (date.getMinutes() / 60 * 360) + (seconds / 60);
+    let hours = (date.getHours() / 12 * 360) + (minutes / 12);
+    second.style.transform = "rotate(" + seconds + "deg)"
+    minute.style.transform = "rotate(" + minutes + "deg)"
+    hour.style.transform = "rotate(" + hours + "deg)"
+    day.innerText = (new Date()).getDate();
+    //时刻度的位置
+    for(let i = 0; i < hour_circles.length; i++){
+        hour_circles[i].style.transform = "rotate(" + (i * 30) + "deg)"
+        hour_circles[i].style.left = hour_circles[i].offsetLeft + ( 102 * Math.sin(i * Math.PI / 6)) + 'px';
+        hour_circles[i].style.top = hour_circles[i].offsetTop - ( 102 * Math.cos(i * Math.PI / 6)) + 'px';
+        
+    }
+    //分刻度的位置
+    for(let i = 0; i < minute_circles.length; i++){
+        minute_circles[i].style.transform = "rotate(" + (i * 6) + "deg)"
+        minute_circles[i].style.left = minute_circles[i].offsetLeft + ( 102 * Math.sin(i * Math.PI / 30)) + 'px';
+        minute_circles[i].style.top =minute_circles[i].offsetTop - ( 103 * Math.cos(i * Math.PI / 30)) + 'px';
+        if(i % 5 === 0){
+            minute_circles[i].style.display = 'none';
+        }
+    }
+
+
+    //开始事件
+
+    let i = 0;
+    timer = setInterval(function(params) {
+       i++;
+        if(i >= 60){
+            i = 0;
+        }
+        // console.log(i);
+        seconds += 6;
+        minutes += 0.1;
+        hours += (1 / 720);
+        second.style.transform = "rotate(" + seconds + "deg)"
+        minute.style.transform = "rotate(" + minutes + "deg)"
+        hour.style.transform = "rotate(" + hours + "deg)"
+    }, 1000)
+    stop.onclick = function (param) { 
+        clearInterval(timer);
+     }
+ }
+</script>
+</body>
+</html>
